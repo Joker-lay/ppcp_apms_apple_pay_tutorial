@@ -155,9 +155,17 @@ app.get('/', (req, res) => {
 app.get('/style.css', (req, res) => {
     res.sendFile(process.cwd() + '/style.css');
 });
+//Servers the style.css file
+app.get('/ministyle.css', (req, res) => {
+  res.sendFile(process.cwd() + '/ministyle.css');
+});
 //Servers the script.js file
 app.get('/script.js', (req, res) => {
     res.sendFile(process.cwd() + '/script.js');
+});
+
+app.get('/taylor.jpg', (req, res) => {
+  res.sendFile(process.cwd() + '/taylor.jpg');
 });
 
 //Send email with SendGrid BEGIN

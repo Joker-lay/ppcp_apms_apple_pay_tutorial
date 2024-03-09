@@ -17,6 +17,7 @@ const client_id = process.env.CLIENT_ID;
 const client_secret = process.env.CLIENT_SECRET;
 const endpoint_url = environment === 'sandbox' ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com';
 
+console.log('client_id', environment);
 /**
  * Creates an order and returns it as a JSON response.
  * @function
@@ -53,6 +54,7 @@ app.post('/create_order', (req, res) => {
                 })
                 .then(res => res.json())
                 .then(json => {
+                    console.log('json', json);
                     res.send(json);
                 }) //Send minimal data to client
         })
@@ -92,7 +94,8 @@ app.post('/complete_order', (req, res) => {
                     let intent_object = req.body.intent === "authorize" ? "authorizations" : "captures";
                     //Remove this if you don't want to send email with SendGrid
                   if (json.purchase_units[0].payments[intent_object][0].status === "COMPLETED") {
-                      send_email_receipt({"id": json.id, "email": req.body.email});
+                      // send_email_receipt({"id": json.id, "email": req.body.email});
+                      console.log('complete_order')
                     }
                     res.send(json);
                 }) //Send minimal data to client

@@ -365,7 +365,7 @@ is_user_logged_in()
           total: {
             label: "My Demo Company",
             type: "final",
-            amount: "2",
+            amount: "0.01",
           }
         };
         current_ap_session = new ApplePaySession(4, payment_request);

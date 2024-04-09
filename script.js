@@ -59,13 +59,13 @@ const client_id = "AX99b0-Ifon90Cja_45IlOrwk2Fz8lJ9CaUXK8tukD7q7c7bK0RR6mXIBJ2T7
 const currency = "USD";
 const intent = "capture";
 
-let display_error_alert = (error) => {
+let display_error_alert = (error, otherInfo) => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth"
     });
-    document.getElementById("alerts").innerHTML = `<div class="ms-alert ms-action2 ms-small">${JSON.stringify(error)}</div>`;
+    document.getElementById("alerts").innerHTML = `<div class="ms-alert ms-action2 ms-small">${JSON.stringify(error) +'--------------------'+ otherInfo}</div>`;
 }
 let display_success_message = (object) => {
     order_details = object.order_details;
@@ -131,13 +131,13 @@ is_user_logged_in()
                 display_success_message({"order_details": order_details, "paypal_buttons": paypal_buttons});
               } else {
                 console.log(order_details);
-                throw error("payment was not completed, please view console for more information");
+                throw error("payment was not completed, please view console for more information1111");
               }
              })
              .catch((error) => {
                 console.log(error);
                 
-                display_error_alert(error)
+                display_error_alert(error, '777')
              });
         },
 
@@ -237,18 +237,18 @@ is_user_logged_in()
                     display_success_message({"order_details": order_details, "paypal_buttons": paypal_buttons});
                   } else {
                     console.log(order_details);
-                    throw error("payment was not completed, please view console for more information");
+                    throw error("payment was not completed, please view console for more information22222");
                   }
                  })
                  .catch((error) => {
                     console.log(error);
-                    display_error_alert(error);
+                    display_error_alert(error, '666');
                  });
               })
               .catch((err) => {
                 console.log(err);
                 reset_purchase_button();
-                display_error_alert(err);
+                display_error_alert(err, '/complete_order');
               });
           });
         });
@@ -307,36 +307,36 @@ is_user_logged_in()
           })
           .then(confirmResult => {
             fetch("/complete_order", {
-              method: "post", headers: { "Content-Type": "application/json; charset=utf-8" },
-              body: JSON.stringify({
-                  "intent": intent,
-                  "order_id": pp_order_id,
-                  "email": apple_pay_email
-              })
-          })
-          .then((response) => response.json())
-          .then((order_details) => {
-            let intent_object = intent === "authorize" ? "authorizations" : "captures";
-            if (order_details.purchase_units[0].payments[intent_object][0].status === "COMPLETED") {
-              current_ap_session.completePayment(ApplePaySession.STATUS_SUCCESS);
-              display_success_message({"order_details": order_details, "paypal_buttons": paypal_buttons});
-            } else {
-              current_ap_session.completePayment(ApplePaySession.STATUS_FAILURE);
-              console.log(order_details);
-              throw error("payment was not completed, please view console for more information");
-            }
-           })
-           .catch((error) => {
+                method: "post", headers: { "Content-Type": "application/json; charset=utf-8" },
+                body: JSON.stringify({
+                    "intent": intent,
+                    "order_id": pp_order_id,
+                    "email": apple_pay_email
+                })
+            })
+            .then((response) => response.json())
+            .then((order_details) => {
+              let intent_object = intent === "authorize" ? "authorizations" : "captures";
+              if (order_details.purchase_units[0].payments[intent_object][0].status === "COMPLETED") {
+                current_ap_session.completePayment(ApplePaySession.STATUS_SUCCESS);
+                display_success_message({"order_details": order_details, "paypal_buttons": paypal_buttons});
+              } else {
+                current_ap_session.completePayment(ApplePaySession.STATUS_FAILURE);
+                console.log(order_details);
+                throw error("payment was not completed, please view console for more information 6666");
+              }
+            })
+            .catch((error) => {
               console.log(error);
-              display_error_alert(error);
-           });
+              display_error_alert(error, '888');
+            });
           })
           .catch(confirmError => {
             if (confirmError) {
               console.error('Error confirming order with applepay token');
               console.error(confirmError);
               current_ap_session.completePayment(ApplePaySession.STATUS_FAILURE);
-              display_error_alert(confirmError);
+              display_error_alert(confirmError, '999');
             }
           });
         });

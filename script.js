@@ -248,7 +248,7 @@ is_user_logged_in()
               .catch((err) => {
                 console.log(err);
                 reset_purchase_button();
-                display_error_alert(error);
+                display_error_alert(err);
               });
           });
         });
@@ -336,7 +336,7 @@ is_user_logged_in()
               console.error('Error confirming order with applepay token');
               console.error(confirmError);
               current_ap_session.completePayment(ApplePaySession.STATUS_FAILURE);
-              display_error_alert(error);
+              display_error_alert(confirmError);
             }
           });
         });

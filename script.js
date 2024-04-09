@@ -59,13 +59,13 @@ const client_id = "AX99b0-Ifon90Cja_45IlOrwk2Fz8lJ9CaUXK8tukD7q7c7bK0RR6mXIBJ2T7
 const currency = "USD";
 const intent = "capture";
 
-let display_error_alert = () => {
+let display_error_alert = (error) => {
     window.scrollTo({
       top: 0,
       left: 0,
       behavior: "smooth"
     });
-    document.getElementById("alerts").innerHTML = `<div class="ms-alert ms-action2 ms-small"><span class="ms-close"></span><p>An Error Ocurred! (View console for more info)</p>  </div>`;
+    document.getElementById("alerts").innerHTML = `<div class="ms-alert ms-action2 ms-small">${JSON.stringify(error)}</div>`;
 }
 let display_success_message = (object) => {
     order_details = object.order_details;
@@ -136,7 +136,8 @@ is_user_logged_in()
              })
              .catch((error) => {
                 console.log(error);
-                display_error_alert()
+                
+                display_error_alert(error)
              });
         },
 
@@ -241,13 +242,13 @@ is_user_logged_in()
                  })
                  .catch((error) => {
                     console.log(error);
-                    display_error_alert();
+                    display_error_alert(error);
                  });
               })
               .catch((err) => {
                 console.log(err);
                 reset_purchase_button();
-                display_error_alert();
+                display_error_alert(error);
               });
           });
         });
@@ -327,7 +328,7 @@ is_user_logged_in()
            })
            .catch((error) => {
               console.log(error);
-              display_error_alert();
+              display_error_alert(error);
            });
           })
           .catch(confirmError => {
@@ -335,7 +336,7 @@ is_user_logged_in()
               console.error('Error confirming order with applepay token');
               console.error(confirmError);
               current_ap_session.completePayment(ApplePaySession.STATUS_FAILURE);
-              display_error_alert();
+              display_error_alert(error);
             }
           });
         });

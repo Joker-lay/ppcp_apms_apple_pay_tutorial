@@ -149,7 +149,7 @@ is_user_logged_in()
             console.log(err);
         }
     });
-    paypal_buttons.render('#payment_options');
+    // paypal_buttons.render('#payment_options');
     //Hosted Fields
     if (paypal.HostedFields.isEligible()) {
         // Renders card fields

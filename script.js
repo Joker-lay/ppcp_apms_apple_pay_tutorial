@@ -149,7 +149,7 @@ is_user_logged_in()
             console.log(err);
         }
     });
-    paypal_buttons.render('#payment_options');
+    // paypal_buttons.render('#payment_options');
     //Hosted Fields
     if (paypal.HostedFields.isEligible()) {
         // Renders card fields
@@ -365,7 +365,7 @@ is_user_logged_in()
           total: {
             label: "My Demo Company",
             type: "final",
-            amount: "3.24",
+            amount: "0.01",
           }
         };
         current_ap_session = new ApplePaySession(4, payment_request);

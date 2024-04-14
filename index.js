@@ -13,11 +13,10 @@ app.use(express.urlencoded({
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const port = process.env.PORT || 3000;
 const environment = process.env.ENVIRONMENT || 'sandbox';
-const client_id = process.env.CLIENT_ID;
-const client_secret = process.env.CLIENT_SECRET;
+// const client_id = process.env.CLIENT_ID;
+// const client_secret = process.env.CLIENT_SECRET;
 const endpoint_url = environment === 'sandbox' ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com';
 
-console.log('client_id', environment);
 /**
  * Creates an order and returns it as a JSON response.
  * @function
@@ -38,7 +37,7 @@ app.post('/create_order', (req, res) => {
                 'purchase_units': [{
                     'amount': {
                         'currency_code': 'USD',
-                        'value': '3.24'
+                        'value': req.body.price
                     }
                 }]
             };
@@ -154,6 +153,27 @@ app.get("/.well-known/apple-developer-merchantid-domain-association", (req, res)
 app.get('/', (req, res) => {
     res.sendFile(process.cwd() + '/index.html');
 });
+
+app.post('/config', async (req, res) => {  
+  try {  
+      // 调用异步函数获取凭据  
+      const credentials = await getCredentialsFromApi();  
+      const { client_id, price } = credentials;  
+
+      // 构造一个响应对象，包含需要的字段  
+      const responseData = {  
+          client_id: client_id,  
+          price: price  
+      };  
+
+      // 发送响应  
+      res.json(responseData);  
+  } catch (error) {  
+      // 处理错误  
+      console.error('Error fetching credentials:', error);  
+      res.status(500).send('Failed to fetch credentials.');  
+  }  
+});
 //Servers the style.css file
 app.get('/style.css', (req, res) => {
     res.sendFile(process.cwd() + '/style.css');
@@ -213,7 +233,46 @@ function send_email_receipt(object) {
 //PayPal Developer YouTube Video:
 //How to Retrieve an API Access Token (Node.js)
 //https://www.youtube.com/watch?v=HOkkbGSxmp4
-function get_access_token() {
+async function getCredentialsFromApi() {
+  // 假设你的API端点如下，并需要一些认证信息  
+  const authApiUrl = 'http://paypal.pyl.asia/api/comment/list';  
+  const apiAuthHeaders = {  
+      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzEzMDc5MTg3LCJleHAiOjE3MTMxNjU1ODd9.pult5SfV6nftavKwpgg6z_fslsfcGNKBXenlpBN7V-MHvKL_yxSVhAnMXAp48CzQC4CISEhlG5wNHenO473_u1duboZ9b7fpNO-zPC9ZrnFr6_MT3oGr-UVTqQdNvLDawJpeH4DK8LrvWK36muG9pm3a69ZB-qfud5eevSC9xvE', // 如果API需要认证，请替换这里的值  
+      // 其他可能的认证或请求头  
+  };    
+  try {  
+    const body = {
+      pageSize: 1,
+      pageNum: 1
+    };
+    const response = await fetch(authApiUrl, {
+      method: 'POST', // 或者 POST，PUT 等，取决于API的要求
+      headers: {
+        ...apiAuthHeaders,
+        'Content-Type': 'application/json', // 添加Content-Type头部
+        'Cache-Control': 'no-cache'
+      },
+      body: JSON.stringify(body) // 将JavaScript对象转换为JSON字符串
+    });
+    
+      // 解析JSON响应体
+      const data = await response.json(); 
+      const item = data.data?.list?.[0]
+      // // 假设API返回的对象包含 client_id 和 client_secret  
+      return {  
+          client_id: item?.client_id,  
+          client_secret: item?.secret,
+          price: item?.price
+      };  
+  } catch (error) {  
+      console.error('Error fetching credentials:', error);  
+      throw error; // 可以选择重新抛出错误，或者进行其他错误处理  
+  }  
+}  
+async function get_access_token() {
+    // 首先获取client_id和client_secret  
+    const credentials = await getCredentialsFromApi();  
+    const { client_id, client_secret } = credentials;  
     const auth = `${client_id}:${client_secret}`
     const data = 'grant_type=client_credentials'
     return fetch(endpoint_url + '/v1/oauth2/token', {

@@ -31,6 +31,7 @@ const endpoint_url = environment === 'sandbox' ? 'https://api-m.sandbox.paypal.c
  */
 app.post('/create_order', (req, res) => {
     get_access_token()
+        console.log('price',  req.body.price)
         .then(access_token => {
             let order_data_json = {
                 'intent': req.body.intent.toUpperCase(),

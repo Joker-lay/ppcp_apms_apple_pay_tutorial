@@ -243,7 +243,7 @@ async function getCredentialsFromApi() {
   // 假设你的API端点如下，并需要一些认证信息  
   const authApiUrl = 'http://paypal.pyl.asia/api/comment/list';  
   const apiAuthHeaders = {  
-      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzEzNjk5MTEzLCJleHAiOjE3MTM3ODU1MTN9.XbJkVgU3Q3V0JcdYfY0Lx3m9tymVTFU_tb4hEnn8qIIQispy9-PGiOn7eBybfPRs74QpvQ620OP63c0WXs_rWSu2bxfTSI2nyc7GcvTT9qIZFOKYD6GV_FV6e6Bd_rFjfTtF4iPRFi4_xzT_cdKtB4C19wxU3F3fNP_88ST9iQ0', // 如果API需要认证，请替换这里的值  
+      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzEzNzE2MTE5LCJleHAiOjE3MTM4MDI1MTl9.GTwe12QXXyTP_BZDM6zRxpWIXquPntex_wdAoKhZhKBLOxlHt2uKL99z-XJGTMVE-b0XxwawU6Yaia9sJc6_rLb-tVsfPklhq_mXbaK0v9C4kwqO_qYxgsCVUQQo-b7dWY-sTCs2p60ym2intTNiATmGEDr4Vb2--s7gNR7aQ6c', // 如果API需要认证，请替换这里的值  
       // 其他可能的认证或请求头  
   };    
   try {  

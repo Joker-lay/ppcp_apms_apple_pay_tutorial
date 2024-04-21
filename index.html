@@ -8,7 +8,16 @@
     <link rel="stylesheet" type="text/css" href="ministyle.css" />
     <link rel="stylesheet" type˜="text/css" href="style.css" />
     <script src="script.js"></script>
+    <script src="google.js"></script>
     <script src="https://applepay.cdn-apple.com/jsapi/v1/apple-pay-sdk.js"></script>
+    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        if (google && paypal.Googlepay) {
+          onGooglePayLoaded().catch(console.log);
+        }
+      });
+    </script> -->
   </head>
   <body>
     <div class="container">
@@ -67,6 +76,11 @@
               <div
                 style="padding-bottom: 13px"
                 id="applepay-container"
+                class="row"
+              ></div>
+              <div
+                style="padding-bottom: 13px"
+                id="googlepay-container"
                 class="row"
               ></div>
             </div>

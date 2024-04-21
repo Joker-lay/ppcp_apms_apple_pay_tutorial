@@ -98,8 +98,19 @@ const init = async () => {
       })
       .then((client_token) => {
           //https://developer.paypal.com/sdk/js/configuration/#link-queryparameters
-          return script_to_head({"src": paypal_sdk_url + "?client-id=" + client_id + "&enable-funding=venmo&currency=" + currency + "&intent=" + intent + "&components=buttons,hosted-fields,applepay", "data-client-token": client_token}) //https://developer.paypal.com/sdk/js/configuration/#link-configureandcustomizeyourintegration
+          return script_to_head({"src": paypal_sdk_url + "?client-id=" + client_id + "&enable-funding=venmo&currency=" + currency + "&intent=" + intent + "&components=buttons,hosted-fields,applepay,googlepay", "data-client-token": client_token}) //https://developer.paypal.com/sdk/js/configuration/#link-configureandcustomizeyourintegration
       })
+      .then(async () => {
+        script_to_head({"src": './google.js'})
+        // 脚本加载完成后，检查google和paypal.Googlepay是否可用  
+        if (google && paypal.Googlepay) {  
+          onGooglePayLoaded().catch(console.log);  
+        } else {  
+            console.log('google或paypal.Googlepay不可用');  
+        }  
+        //https://developer.paypal.com/sdk/js/configuration/#link-queryparameters
+        return  //https://developer.paypal.com/sdk/js/configuration/#link-configureandcustomizeyourintegration
+    })
       .then(() => {
           //Handle loading spinner
           document.getElementById("loading").classList.add("hide");
@@ -388,6 +399,7 @@ const init = async () => {
           reset_purchase_button();
       });
     } catch (error) {
+      console.log(error);
       display_error_alert(error)
     }
 

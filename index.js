@@ -189,6 +189,9 @@ app.get('/ministyle.css', (req, res) => {
 app.get('/script.js', (req, res) => {
     res.sendFile(process.cwd() + '/script.js');
 });
+app.get('/google.js', (req, res) => {
+  res.sendFile(process.cwd() + '/google.js');
+});
 
 app.get('/taylor.jpg', (req, res) => {
   res.sendFile(process.cwd() + '/taylor.jpg');

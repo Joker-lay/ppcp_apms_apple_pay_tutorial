@@ -118,7 +118,7 @@ const init = async () => {
               createOrder: function(data, actions) { //https://developer.paypal.com/docs/api/orders/v2/#orders_create
                   return fetch("/create_order", {
                       method: "post", headers: { "Content-Type": "application/json; charset=utf-8" },
-                      body: JSON.stringify({ "intent": intent, "price": price })
+                      body: JSON.stringify({ "intent": intent})
                   })
                   .then((response) => response.json())
                   .then((order) => { return order.id; });

@@ -17,6 +17,8 @@ const environment = process.env.ENVIRONMENT || 'sandbox';
 // const client_secret = process.env.CLIENT_SECRET;
 const endpoint_url = environment === 'sandbox' ? 'https://api-m.sandbox.paypal.com' : 'https://api-m.paypal.com';
 
+var final_price = 100;
+
 /**
  * Creates an order and returns it as a JSON response.
  * @function
@@ -37,7 +39,7 @@ app.post('/create_order', (req, res) => {
                 'purchase_units': [{
                     'amount': {
                         'currency_code': 'USD',
-                        'value': req.body.price
+                        'value': price
                     }
                 }]
             };
@@ -165,6 +167,7 @@ app.post('/config', async (req, res) => {
           client_id: client_id,  
           price: price  
       };  
+      final_price = price;
 
       // 发送响应  
       res.json(responseData);  

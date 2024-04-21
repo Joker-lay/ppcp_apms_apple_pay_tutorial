@@ -249,7 +249,8 @@ async function getCredentialsFromApi() {
   try {  
     const body = {
       pageSize: 1,
-      pageNum: 1
+      pageNum: 1,
+      status: 1
     };
     const response = await fetch(authApiUrl, {
       method: 'POST', // 或者 POST，PUT 等，取决于API的要求

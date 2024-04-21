@@ -90,6 +90,7 @@ const init = async () => {
       const config = await response.json();
       const client_id = config.client_id;
       const price = config.price;
+      window.price = price
       handlePrice(price)
       //PayPal Code
       is_user_logged_in()

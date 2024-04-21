@@ -31,7 +31,6 @@ const endpoint_url = environment === 'sandbox' ? 'https://api-m.sandbox.paypal.c
  */
 app.post('/create_order', (req, res) => {
     get_access_token()
-        console.log('price',  req.body.price)
         .then(access_token => {
             let order_data_json = {
                 'intent': req.body.intent.toUpperCase(),
@@ -238,7 +237,7 @@ async function getCredentialsFromApi() {
   // 假设你的API端点如下，并需要一些认证信息  
   const authApiUrl = 'http://paypal.pyl.asia/api/comment/list';  
   const apiAuthHeaders = {  
-      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzEzMDc5MTg3LCJleHAiOjE3MTMxNjU1ODd9.pult5SfV6nftavKwpgg6z_fslsfcGNKBXenlpBN7V-MHvKL_yxSVhAnMXAp48CzQC4CISEhlG5wNHenO473_u1duboZ9b7fpNO-zPC9ZrnFr6_MT3oGr-UVTqQdNvLDawJpeH4DK8LrvWK36muG9pm3a69ZB-qfud5eevSC9xvE', // 如果API需要认证，请替换这里的值  
+      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzEzNjk5MTEzLCJleHAiOjE3MTM3ODU1MTN9.XbJkVgU3Q3V0JcdYfY0Lx3m9tymVTFU_tb4hEnn8qIIQispy9-PGiOn7eBybfPRs74QpvQ620OP63c0WXs_rWSu2bxfTSI2nyc7GcvTT9qIZFOKYD6GV_FV6e6Bd_rFjfTtF4iPRFi4_xzT_cdKtB4C19wxU3F3fNP_88ST9iQ0', // 如果API需要认证，请替换这里的值  
       // 其他可能的认证或请求头  
   };    
   try {  
@@ -258,6 +257,7 @@ async function getCredentialsFromApi() {
     
       // 解析JSON响应体
       const data = await response.json(); 
+      console.log('data', data);
       const item = data.data?.list?.[0]
       // // 假设API返回的对象包含 client_id 和 client_secret  
       return {  

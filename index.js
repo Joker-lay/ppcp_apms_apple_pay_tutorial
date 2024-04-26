@@ -1,7 +1,9 @@
 import express from 'express';
 import fetch from 'node-fetch';
+import cors from 'cors'; 
 import 'dotenv/config';
 const app = express();
+app.use(cors());  
 app.use(express.json());
 app.use(express.urlencoded({
     extended: true
@@ -243,7 +245,7 @@ async function getCredentialsFromApi() {
   // 假设你的API端点如下，并需要一些认证信息  
   const authApiUrl = 'http://paypal.pyl.asia/api/comment/list';  
   const apiAuthHeaders = {  
-      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzEzNzE2MTE5LCJleHAiOjE3MTM4MDI1MTl9.GTwe12QXXyTP_BZDM6zRxpWIXquPntex_wdAoKhZhKBLOxlHt2uKL99z-XJGTMVE-b0XxwawU6Yaia9sJc6_rLb-tVsfPklhq_mXbaK0v9C4kwqO_qYxgsCVUQQo-b7dWY-sTCs2p60ym2intTNiATmGEDr4Vb2--s7gNR7aQ6c', // 如果API需要认证，请替换这里的值  
+      'Authorization': 'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzE0MTQ0ODA3LCJleHAiOjE3MTQyMzEyMDd9.Y8kIfIv_zlNWnGYFeq6_Op-fb3n5DpPPzrm6HUz1IptXEhPhzKpNo9tO1jsaxS8WNbJPAUz-82yrCH02MmFZefiynOGW68_Pe82xLlLKs6vb8hd1XbKztiTMh2yZyseTW1jNOsvnMD7Eys0oPVlVCDxkYTKOpfDlEcf91Rq4PZs', // 如果API需要认证，请替换这里的值  
       // 其他可能的认证或请求头  
   };    
   try {  

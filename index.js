@@ -264,11 +264,29 @@ function send_email_receipt(object) {
 //How to Retrieve an API Access Token (Node.js)
 //https://www.youtube.com/watch?v=HOkkbGSxmp4
 async function getCredentialsFromApi() {
+  const loginBody = {
+    name: "test1",
+    password: "12312311",
+  };
+
+  const res = await fetch("http://paypal.pyl.asia/api/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
+    },
+    body: JSON.stringify(loginBody),
+  });
+
+  // 假设登录成功后，token在响应的JSON的token字段中
+  const data1 = await res.json();
+  let apiToken = data1; // 假设token在data.token中
+  console.log("apiToken", typeof apiToken.data.token);
+
   // 假设你的API端点如下，并需要一些认证信息
   const authApiUrl = "http://paypal.pyl.asia/api/comment/list";
   const apiAuthHeaders = {
-    Authorization:
-      "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6InRlc3QxIiwiaWF0IjoxNzE0NzM4MTIzLCJleHAiOjE3NDYyNzQxMjN9.HIbdmKNrIEAfUvDenZzxMEGB3meEDX5ApbobaIhDCl1XjiTU7yLYz69S5SfGI4wsAySAz0-NSptxCU2u6eemGkJ55lqpNpiLB7H8e6uZr_MwmgLBPH-OCY1tnOGZZqbpa5BVCpgVDgMzAhqr-FdJjFoNyrmLpOwShL3uIHsq8UA", // 如果API需要认证，请替换这里的值
+    Authorization: `Bearer ${apiToken.data.token}`, // 如果API需要认证，请替换这里的值
     // 其他可能的认证或请求头
   };
   try {

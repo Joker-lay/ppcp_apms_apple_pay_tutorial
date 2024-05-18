@@ -1,5 +1,5 @@
 // Helper / Utility functions
-window.baseUrl = 'https://api.ads8566.shop/';
+window.baseUrl = 'https://api.ads8566.shop';
 let current_customer_id;
 let order_id;
 let global_apple_pay_config;
